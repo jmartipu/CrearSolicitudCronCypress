@@ -13,12 +13,11 @@ from threading import Thread
 def execute_test(script):
     print('Se ejecuta la prueba')
     txt = """
-    describe('Los estudiantes under monkeys', function() {
+    describe('Prueba Cypress', function() {
 
-    it('visits los estudiantes and survives monkeys', function() {
+    it('una Prueba', function() {
         cy.visit('https://losestudiantes.co');
         cy.contains('Cerrar').click();
-        cy.wait(1000);
     })
 
     });
@@ -26,7 +25,7 @@ def execute_test(script):
 
     f = open(Settings.CYPRESS_PATH + "/cypress/integration/test.js", "w+")
     f.write(txt)
-    output = subprocess.call(['cd ' + Settings.CYPRESS_PATH + '&& npm run cy:run'])
+    output = subprocess.call(['npm','run', 'test'])
     if output < 0:
         print('error en ejecución de prueba')
 
@@ -40,10 +39,11 @@ def process():
                 message_body = sqs_connection.message.get('MessageBody')
                 #Aqui va la conversion del json
                 script = message_body
+                sqs_connection.delete()
                 execute_test(script)
                 # if Settings.EMAIL_SEND == 'Y':
                 #     Email.send_email(email=email, tittle=tittle, name=user_first_name)
-                sqs_connection.delete()
+                
                 
     except Exception as e:
         print(e)
