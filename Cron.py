@@ -12,16 +12,7 @@ from threading import Thread
 
 def execute_test(script):
     print('Se ejecuta la prueba')
-    txt = """
-    describe('Prueba Cypress', function() {
-
-    it('una Prueba', function() {
-        cy.visit('https://losestudiantes.co');
-        cy.contains('Cerrar').click();
-    })
-
-    });
-    """
+    txt = script
 
     with open(Settings.CYPRESS_PATH + "/cypress/integration/test.js", "w+") as file:
         file.write(txt)
@@ -32,14 +23,15 @@ def execute_test(script):
 
 def process():
     try:
-        sqs_connection = SQSConnection(Settings.AWS_QUEUE_URL_OUT)
+        sqs_connection = SQSConnection(Settings.AWS_QUEUE_URL_OUT_CYPRESS)
 
         with sqs_connection:
             sqs_connection.receive()
             if sqs_connection.message is not '':
                 message_body = sqs_connection.message.get('MessageBody')
+                body = json.loads(message_body)
                 #Aqui va la conversion del json
-                script = message_body
+                script = body['script']
                 sqs_connection.delete()
                 execute_test(script)
                 # if Settings.EMAIL_SEND == 'Y':
