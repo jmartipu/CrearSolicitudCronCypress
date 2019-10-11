@@ -1,6 +1,7 @@
 import os
 
 MEDIA_DIR = '/home/ec2-user/apps/Cron/'
+CYPRESS_PATH = os.environ.get('CYPRESS_PATH')
 EMAIL_ADDRESS = os.environ.get('EMAIL_ADDRESS')
 EMAIL_USERNAME = os.environ.get('EMAIL_USERNAME')
 EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')

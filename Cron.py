@@ -12,9 +12,23 @@ from threading import Thread
 
 def execute_test(script):
     print('Se ejecuta la prueba')
-    # output = subprocess.call(['/home/ec2-user/bin/cypress', 'argumento 1', 'argumento 2', 'argumento n'])
-    # if output < 0:
-    #     print('error en ejecución de prueba')
+    txt = """
+    describe('Los estudiantes under monkeys', function() {
+
+    it('visits los estudiantes and survives monkeys', function() {
+        cy.visit('https://losestudiantes.co');
+        cy.contains('Cerrar').click();
+        cy.wait(1000);
+    })
+
+    });
+    """
+
+    f = open("test.js", "w+")
+    f.write(txt)
+    output = subprocess.call([Settings.CYPRESS_PATH + 'npm run cy:run'])
+    if output < 0:
+        print('error en ejecución de prueba')
 
 def process():
     try:
