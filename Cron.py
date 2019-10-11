@@ -1,5 +1,3 @@
-import decimal
-import os
 from time import sleep
 import datetime
 import Settings
@@ -36,8 +34,7 @@ def process():
                 execute_test(script)
                 # if Settings.EMAIL_SEND == 'Y':
                 #     Email.send_email(email=email, tittle=tittle, name=user_first_name)
-                
-                
+
     except Exception as e:
         print(e)
 
