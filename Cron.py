@@ -24,9 +24,9 @@ def execute_test(script):
     });
     """
 
-    f = open("test.js", "w+")
+    f = open(Settings.CYPRESS_PATH + "/cypress/integration/test.js", "w+")
     f.write(txt)
-    output = subprocess.call([Settings.CYPRESS_PATH + 'npm run cy:run'])
+    output = subprocess.call(['cd ' + Settings.CYPRESS_PATH + '&& npm run cy:run'])
     if output < 0:
         print('error en ejecución de prueba')
 
