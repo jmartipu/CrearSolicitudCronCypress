@@ -26,10 +26,10 @@ def process():
         with sqs_connection:
             sqs_connection.receive()
             if sqs_connection.message is not '':
-                message_body = sqs_connection.message.get('MessageBody')
-                body = json.loads(message_body)
+                message_body = sqs_connection.message.get('Body')
+                msg = json.loads(message_body)
                 #Aqui va la conversion del json
-                script = body['script']
+                script = msg['script']
                 sqs_connection.delete()
                 execute_test(script)
                 # if Settings.EMAIL_SEND == 'Y':
@@ -40,8 +40,8 @@ def process():
 
 
 if __name__ == '__main__':
-    while True:
+    # while True:
         Thread(target=process).start()
         st = str(datetime.datetime.now())
         print(st + ' : alive')
-        sleep(Settings.SLEEP_TIME)
+        # sleep(Settings.SLEEP_TIME)
