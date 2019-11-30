@@ -42,9 +42,8 @@ def process():
 
 
 if __name__ == '__main__':
-    #while True:
-        #Thread(target=process).start()
-        process()
+    while True:
+        Thread(target=process).start()
         st = str(datetime.datetime.now())
         print(st + ' : alive')
         sleep(Settings.SLEEP_TIME)
